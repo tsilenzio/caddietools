@@ -153,3 +153,7 @@ for f in test/test_*.lua; do lua "$f"; done
 ```
 
 Each suite ends with `ALL PASS`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
