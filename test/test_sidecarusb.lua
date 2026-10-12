@@ -99,10 +99,13 @@ local function lastAlert() return hs._log[#hs._log] end
 -- Without sidecarctl installed nothing runs
 local s = boot()
 env.exists = false
+env.attached = { IPAD }
 s:start()
-env.usb(event(IPAD, "added"))
-check(#env.timers == 0 and #env.tasks == 0, "without sidecarctl a plug runs nothing")
-check(lastAlert():find("sidecarctl not installed", 1, true), "and says so")
+check(lastAlert() == "alert: Sidecar: sidecarctl not installed, so SidecarUSB is off", "without sidecarctl, start says so")
+check(env.watcher == nil and #env.timers == 0 and #env.tasks == 0, "and starts nothing, even with an iPad attached")
+s:stop()
+s:start()
+check(#hs._log > 0 and lastAlert():find("sidecarctl not installed", 1, true), "and says so again on the next start")
 s:stop()
 
 -- Plug in: wait, then connect over the cable, sidecarctl picking the one iPad

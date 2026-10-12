@@ -13,8 +13,8 @@
 --- arranged like any other.
 ---
 --- Needs sidecarctl installed with Homebrew, since macOS has no public API for
---- Sidecar. Without it the Spoon says so in the console and does nothing. sidecarctl
---- uses private frameworks, so a macOS update can break it.
+--- Sidecar. Without it the Spoon says so each time the config loads and starts
+--- nothing. sidecarctl uses private frameworks, so a macOS update can break it.
 
 local Core = require("CaddieCore")
 local part = Core.part
@@ -70,18 +70,18 @@ end
 
 function obj:_onUSB(event)
   if not self.isIPad(event) then return end
-  if not self.path then
-    self:_notify("sidecarctl not installed")
-    return
-  end
   if event.eventType == "added" then self:_plugged() elseif event.eventType == "removed" then self:_unplugged() end
 end
 
 function obj:start()
   if self.scope then return self end
-  self.scope = Core.scope(self.name)
   self.path = launcher.find(self.helperPath)
-  if not self.path then print(self.name .. ": sidecarctl not installed, so nothing will connect") end
+  -- Said on every load, and nothing is started, so the rest of the config carries on
+  if not self.path then
+    self:_notify("sidecarctl not installed, so SidecarUSB is off")
+    return self
+  end
+  self.scope = Core.scope(self.name)
   self.scope:add(function() self:_cancel() end, "connect timer and task")
   self.scope:add(function() self:_stopBoost() end, "boost")
   self.scope:add(function() self:_stopDismissing() end, "dialog watch")
@@ -89,7 +89,7 @@ function obj:start()
   self:_syncBoost()
   -- Held on self, since a watcher with no reference is garbage collected
   self.watcher = self.scope:watcher(hs.usb.watcher.new(function(e) self:_onUSB(e) end), "USB watcher")
-  if self.connectOnStart and self.path then
+  if self.connectOnStart then
     for _, device in ipairs(hs.usb.attachedDevices() or {}) do
       if self.isIPad(device) then
         self:_plugged()
