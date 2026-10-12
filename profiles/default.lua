@@ -7,4 +7,5 @@ return {
   "TitleBarTweaks",
   "EdgeSnap",
   "MouseTweaks",
+  SidecarUSB = { config = { framerate = 120, retina = true } },
 }

@@ -65,5 +65,6 @@ cat <<EOF
 
 Add to ~/.hammerspoon/init.lua, listing the Spoons you want:
   hs.loadSpoon("CaddieTools").use({ "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks" })
+SidecarUSB also needs sidecarctl installed with Homebrew.
 EOF
 exit $status
