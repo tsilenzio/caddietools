@@ -22,7 +22,7 @@ exception noted under [SidecarUSB](#sidecarusb).
 | EdgeSnap | Drag a window to a screen edge or corner to tile it. A preview shows where it will go, and a small panel beside the cursor offers the other placements for that edge. |
 | MouseTweaks | Reverses the scroll direction of a mouse wheel and leaves trackpads on Natural Scrolling. Wheel notches glide instead of jumping. |
 | AutoReload | Reloads Hammerspoon when you save a Lua file, and skips the reload while any file has a syntax error. |
-| SidecarUSB | Starts Sidecar when an iPad is plugged in by USB and ends it on unplug. |
+| SidecarUSB | Starts Sidecar when an iPad is plugged in by USB and ends it on unplug. Needs [sidecarctl](https://github.com/tsilenzio/sidecarctl). |
 
 CaddieCore, the runtime they share, loads by itself. However a window gets
 placed, by hotkey, green button, or edge drag, the same memory applies, so a
@@ -53,6 +53,10 @@ dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({
 
 Reload Hammerspoon. With AutoReload in the list, an alert says the config
 loaded.
+
+There's a sixth Spoon, SidecarUSB, which starts Sidecar when you plug in an
+iPad. It needs an external tool installed first, so it has
+[its own section](#sidecarusb).
 
 The clone can live anywhere. Point the line at it:
 
@@ -142,9 +146,26 @@ will act on the same drag.
 
 ### SidecarUSB
 
-Needs the `sidecarctl` command line tool installed with Homebrew, since macOS
-has no public way to start Sidecar. Without it, SidecarUSB prints one line to
-the Hammerspoon console and does nothing.
+SidecarUSB depends on an external command line tool,
+[sidecarctl](https://github.com/tsilenzio/sidecarctl), since macOS has no public
+way to start Sidecar. Install it with Homebrew:
+
+```sh
+brew install tsilenzio/tap/sidecarctl
+```
+
+Then add `"SidecarUSB"` to your list:
+
+```lua
+dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({
+  "AutoReload", "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks",
+  "SidecarUSB",
+})
+```
+
+Plug an iPad in by USB and Sidecar starts over the cable. Unplug it and Sidecar
+ends. Without sidecarctl installed, SidecarUSB shows an alert each time the
+config loads and stays off. The rest of your config loads as usual.
 
 ### AutoReload
 
