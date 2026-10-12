@@ -90,6 +90,8 @@ local function suite()
   Core:start()
   check(type(Core.scope) == "function", "Core:start() leaves the Core.scope constructor in place")
   local state = Core.window()
+  -- The geometry checks expect bare tiles, and the gap is set where it is tested
+  state.gap, state.excluded, state.presets = 0, nil, nil
   state.minSize = { w = 400, h = 300 }
   state.centerSmall = { fraction = 0.8, apps = { ["com.apple.calculator"] = true } }
   local tiler = stub.loadSpoon("TileManager")

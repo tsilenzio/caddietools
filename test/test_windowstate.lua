@@ -58,6 +58,11 @@ end
 screens = { fakeScreen(1, SF), fakeScreen(2, OTHER) }
 local Core, state = boot()
 check(Core.window() == state, "Core.window() returns one shared instance")
+check(state.gap == 1 and state.minSize.w == 400 and state.presets["com.apple.Terminal"].w == 0.6
+  and state.excluded["com.apple.systempreferences"] and state.centerSmall.apps["com.apple.calculator"],
+  "the settings start from window/defaults.lua")
+-- Each rule is switched on by itself below
+state.gap, state.excluded, state.minSize, state.centerSmall, state.presets = 0, nil, nil, nil, nil
 
 local half = { x = 0, y = 0, w = 1000, h = 1000 }
 

@@ -19,26 +19,8 @@ local rules = part("window/rules")
 
 local M = {}
 
--- Settings, read live by the rules, memory, and undo. A rule is off while its
--- setting is nil or empty.
-local DEFAULTS = {
-  -- Points between a placed window and its neighbors or the screen's inner edges
-  gap = 0,
-  -- Bundle IDs whose windows are never placed, restored, or undone
-  excluded = nil,
-  -- Smallest tile or maximize, { w, h }, below which the action is vetoed
-  minSize = nil,
-  -- Apps whose tiles shrink to `fraction` of the tile: { fraction, apps = { [id] = true } }
-  centerSmall = nil,
-  -- Apps whose maximize takes a fraction of the screen: { [id] = { w, h } }
-  presets = nil,
-  -- Frames remembered per window for undo
-  undoDepth = 20,
-  -- Frames within this many points of where a placement left a window count as untouched
-  trustSlack = 1,
-  -- Remembered windows kept across a reload
-  maxEntries = 200,
-}
+-- Settings, read live by the rules, memory, and undo
+local DEFAULTS = part("window/defaults")
 
 local State = {}
 State.__index = State
