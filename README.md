@@ -1,11 +1,13 @@
 # CaddieTools
 
 Window tiling, title-bar fixes, and mouse tweaks for macOS, written as
-[Hammerspoon](https://www.hammerspoon.org) Spoons. One line in your Hammerspoon
+[Hammerspoon](https://www.hammerspoon.org) Spoons. One call in your Hammerspoon
 config loads the ones you want.
 
 ```lua
-dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({ "AutoReload", "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks" })
+dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({
+  "AutoReload", "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks",
+})
 ```
 
 It's all Lua. Nothing is compiled and nothing else has to be installed, with one
@@ -41,10 +43,12 @@ Clone the repository into your Hammerspoon config directory:
 git clone https://github.com/tsilenzio/caddietools.git ~/.hammerspoon/CaddieTools
 ```
 
-Then add one line to `~/.hammerspoon/init.lua`, listing the Spoons you want:
+Then add this to `~/.hammerspoon/init.lua`, listing the Spoons you want:
 
 ```lua
-dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({ "AutoReload", "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks" })
+dofile(hs.configdir .. "/CaddieTools/Spoons/CaddieTools.spoon/init.lua").use({
+  "AutoReload", "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks",
+})
 ```
 
 Reload Hammerspoon. With AutoReload in the list, an alert says the config
@@ -53,7 +57,9 @@ loaded.
 The clone can live anywhere. Point the line at it:
 
 ```lua
-dofile("/path/to/clone/Spoons/CaddieTools.spoon/init.lua").use({ "TileManager", "EdgeSnap" })
+dofile("/path/to/clone/Spoons/CaddieTools.spoon/init.lua").use({
+  "TileManager", "EdgeSnap",
+})
 ```
 
 ### As regular Spoons
@@ -68,7 +74,9 @@ If you'd rather load them the way other Spoons load, `install.sh` links them int
 ```
 
 ```lua
-hs.loadSpoon("CaddieTools").use({ "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks" })
+hs.loadSpoon("CaddieTools").use({
+  "TileManager", "TitleBarTweaks", "EdgeSnap", "MouseTweaks",
+})
 ```
 
 They're links, so `git pull` updates them. The script never overwrites a Spoon
